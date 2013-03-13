@@ -3,7 +3,7 @@
 Twitter API client that works with Application-only authentication 
 
 As of the 1.1 version of the [Twitter REST API](https://dev.twitter.com/docs/api), all requests require OAuth.
-On 11-Mar-2012, Twitter released Application-only authentication to allow
+On 11-Mar-2013, Twitter released Application-only authentication to allow
 requests on behalf of an APPLICATION, as opposed to on behalf of a specific USER.
 
 This library implements the new authentication for public resources like user timelines.
