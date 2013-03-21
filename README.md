@@ -1,6 +1,6 @@
 # CodeIgniter-Twitter Consumer
 
-Twitter API client that works with Application-only authentication 
+Twitter API client that works with Application-only authentication for compatibility with the 1.1 API.  Can expose tweets as RSS or JSON and restore shortened URLS.
 
 As of the 1.1 version of the [Twitter REST API](https://dev.twitter.com/docs/api), all requests require OAuth.
 On 11-Mar-2013, Twitter released Application-only authentication to allow
