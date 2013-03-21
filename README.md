@@ -12,6 +12,11 @@ See <https://dev.twitter.com/docs/auth/application-only-auth> for more info on t
 
 See <https://dev.twitter.com/apps> to register an application - you'll need a consumer key and consumer secret.
 
+## Features
+1. Wraps API requests in OAuth.
+2. Optionally restore auto-shortened urls.
+3. Expose tweets as RSS.
+
 ## Requirements
 
 1. PHP 5
@@ -26,12 +31,28 @@ See <https://dev.twitter.com/apps> to register an application - you'll need a co
 	// Which API resource do we want to fetch?
 	$resource = '/statuses/user_timeline.json?screen_name=joshmoody';
 	
-	// Make the call.
-	$response = $this->twitter_consumer->request($resource);
+	// Make the call, passing TRUE as 2nd param to restore shortened URLS.
+	$response = $this->twitter_consumer->request($resource, TRUE);
 	
 	// Send a header and output response.
 	header('Content-Type: application/json; charset=utf-8');
 	print $response;
+	exit;
+	
+## Example 2 (If RSS is your thing)
+	// Load the library.
+	$this->load->library('twitter_consumer');
+	
+	// Which API resource do we want to fetch?
+	$resource = '/statuses/user_timeline.json?screen_name=joshmoody';
+	
+	// Make the call, passing TRUE as 2nd param to restore shortened URLS.
+	$response = $this->twitter_consumer->request($resource, TRUE);
+
+	// Convert the json response to RSS	
+	$rss = $this->twitter_consumer->to_rss($response);
+	header('Content-Type: text/xml');
+	print $rss;
 	exit;
 
 ## Installation
