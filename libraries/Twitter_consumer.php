@@ -160,6 +160,11 @@ class Twitter_consumer{
 	{
 		$feed = json_decode($json);
 		
+		if (array_key_exists('statuses', $feed))
+		{
+			$feed = $feed->statuses;
+		}
+		
 		foreach($feed as $item)
 		{
 			if (is_array($item->entities->urls))
