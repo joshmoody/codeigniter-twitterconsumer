@@ -12,12 +12,16 @@
 class Twitter_consumer{
 	
 	public $request_info;
+	protected $token;
 	
 	public function __construct()
 	{
 		$this->load->library('curl');
 		$this->load->config('twitter', TRUE);
-		$this->token="";
+		
+		$this->request_info = NULL;
+		$this->token = NULL;
+		
 		log_message('debug', 'Twitter Consumer Class Initialized');
 	}
 
@@ -31,7 +35,8 @@ class Twitter_consumer{
 	 */
 	public function request($url, $expand_urls = FALSE)
 	{
-		if ($this->token==""){
+		if ($this->token==NULL)
+		{
 			try
 			{
 				$this->token = $this->get_token();	
@@ -210,7 +215,8 @@ class Twitter_consumer{
 	/**
 	 * Sets the token, can be used with get_token to store the token bewtween calls
 	 */
-	public function set_token($token){
+	public function set_token($token)
+	{
   		$this->token=$token;
 	}
 	
