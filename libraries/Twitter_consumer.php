@@ -32,14 +32,14 @@ class Twitter_consumer{
 	public function request($url, $expand_urls = FALSE)
 	{
 		if ($this->token==""){
-		try
-		{
-			$this->token = $this->get_token();	
-		}
-		catch (Exception $e)
-		{
-			return json_encode(array('success' => FALSE, 'error' => $e->getMessage()));
-		}
+			try
+			{
+				$this->token = $this->get_token();	
+			}
+			catch (Exception $e)
+			{
+				return json_encode(array('success' => FALSE, 'error' => $e->getMessage()));
+			}
 		}
 		
 		$this->curl->create('https://api.twitter.com/1.1/' . $url);
