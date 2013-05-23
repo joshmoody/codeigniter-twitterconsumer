@@ -17,7 +17,7 @@ class Twitter_consumer{
 	{
 		$this->load->library('curl');
 		$this->load->config('twitter', TRUE);
-		
+		$this->token="";
 		log_message('debug', 'Twitter Consumer Class Initialized');
 	}
 
@@ -31,17 +31,19 @@ class Twitter_consumer{
 	 */
 	public function request($url, $expand_urls = FALSE)
 	{
+		if ($this->token==""){
 		try
 		{
-			$token = $this->get_token();	
+			$this->token = $this->get_token();	
 		}
 		catch (Exception $e)
 		{
 			return json_encode(array('success' => FALSE, 'error' => $e->getMessage()));
 		}
+		}
 		
 		$this->curl->create('https://api.twitter.com/1.1/' . $url);
-		$this->curl->http_header('Authorization', 'Bearer ' . $token);
+		$this->curl->http_header('Authorization', 'Bearer ' . $this->token);
 		$this->curl->http_header('User-Agent', $_SERVER['SERVER_NAME']);
 		$response = $this->curl->execute();
 
@@ -183,7 +185,7 @@ class Twitter_consumer{
 	 * Use basic auth with a key comprised of our consumer key/consumer token
 	 * to request a bearer token.
 	 */
-	protected function get_token()
+	public function get_token()
 	{
 		$auth_key = $this->get_auth_key();
 		$this->curl->create('https://api.twitter.com/oauth2/token');
@@ -204,6 +206,14 @@ class Twitter_consumer{
 			throw new Exception($error);
 		}
 	}
+	
+	/**
+	 * Sets the token, can be used with get_token to store the token bewtween calls
+	 */
+	public function set_token($token){
+  		$this->token=$token;
+	}
+	
 	
 	/**
 	 * Creates a basic auth key used to get a bearer token.
